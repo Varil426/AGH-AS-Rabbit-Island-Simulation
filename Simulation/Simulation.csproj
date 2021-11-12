@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>Rabbit_Island</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="SimulationStandard">
+      <HintPath>..\External References\SimulationStandard.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Using Include="System" />
+	  <Using Include="System.Collections.Generic" />
+	  <Using Include="System.Linq" />
+  </ItemGroup>
+</Project>
