@@ -15,14 +15,29 @@ namespace Simulation
 
         private Map _worldMap;
 
-        public Config WorldConfig { get; init; }
+        private readonly Director _director;
+
+        private readonly Config _worldConfig;
+
+        public Config WorldConfig
+        {
+            get => _worldConfig;
+            
+            init
+            {
+                _worldConfig = value;
+                GenerateOffspring = value.SelectedOffspringGenerationMethod ?? OffspringGeneration.BasicOffspringGeneration;
+            }
+        }
 
         public World()
         {
             _entities = new List<Entity>();
             _legacyCreatures = new List<Creature>();
             _worldMap = new Map((1000, 1000));
-            WorldConfig = new Config();
+            _director = new(this);
+            _worldConfig = new Config();
+            GenerateOffspring = OffspringGeneration.BasicOffspringGeneration;
         }
 
         /// <summary>
@@ -89,7 +104,7 @@ namespace Simulation
         {
             lock (_entities)
             {
-                Director.Instance.Start();
+                _director.Start();
 
                 var threads = new List<Thread>();
                 foreach (ICreature creature in _entities.Where(x => x is ICreature))
@@ -154,7 +169,7 @@ namespace Simulation
 
         public void Reset()
         {
-            Director.Instance.Stop();
+            _director.Stop();
             lock (_entities)
             {
                 _entities.ForEach(x =>
@@ -184,6 +199,6 @@ namespace Simulation
 
         public delegate List<Creature> GenerateOffspringMethod(Creature mother, Creature father);
 
-        public GenerateOffspringMethod? GenerateOffspring;
+        public GenerateOffspringMethod GenerateOffspring;
     }
 }

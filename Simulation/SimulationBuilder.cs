@@ -89,9 +89,6 @@ public class SimulationBuilder : ISimulationBuilder
             }
         };
 
-        simulation.World.WorldConfig.RabbitConfig.RefreshValues(simulation.World);
-        simulation.World.WorldConfig.WolvesConfig.RefreshValues(simulation.World);
-
         return simulation;
     }
 

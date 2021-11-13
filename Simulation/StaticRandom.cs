@@ -9,14 +9,14 @@ namespace Simulation
     /// </summary>
     internal static class StaticRandom
     {
-        private static readonly ThreadLocal<Random> _random = new ThreadLocal<Random>(() => new Random());
+        private static readonly ThreadLocal<Random> _random = new(() => new Random());
 
         public static Random Generator => _random.Value!;
 
-        public static Vector2 GenerateRandomPosition()
+        public static Vector2 GenerateRandomPosition(World world)
         {
-            float x = Generator.Next(World.Instance.WorldMap.Size.Item1);
-            float y = Generator.Next(World.Instance.WorldMap.Size.Item2);
+            float x = Generator.Next(world.WorldMap.Size.Item1);
+            float y = Generator.Next(world.WorldMap.Size.Item2);
             return new Vector2(x, y);
         }
     }

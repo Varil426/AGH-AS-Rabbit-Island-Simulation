@@ -1,33 +1,18 @@
 ﻿using Simulation.Entities;
-using System;
 using System.Threading;
 
 namespace Simulation
 {
     /// <summary>
-    /// Singleton that is meant to be managing not-alive entities.
+    /// Object responsible for managing of not-alive entities.
     /// </summary>
     internal class Director
     {
-        private readonly static Director _instance = new Director();
+        private readonly World _world;
 
-        public static Director Instance
+        public Director(World world)
         {
-            get
-            {
-                return _instance;
-            }
-        }
-
-        private readonly World world;
-
-        static Director()
-        {
-        }
-
-        private Director()
-        {
-            world = World.Instance;
+            _world = world;
         }
 
         private Thread? _directorThread;
@@ -41,7 +26,7 @@ namespace Simulation
 
         public void Start()
         {
-            _directorThread = new Thread(Instance.Run)
+            _directorThread = new Thread(Run)
             {
                 Name = "Director Thread",
                 IsBackground = true
@@ -53,10 +38,10 @@ namespace Simulation
         {
             lock (this)
             {
-                int dayDuration = (int)((60 * 60 * 24 * 1000) / world.WorldConfig.TimeRate);
+                int dayDuration = (int)((60 * 60 * 24 * 1000) / _world.WorldConfig.TimeRate);
                 int expirencyTime = dayDuration * 2;
-                int fruitsPerDay = world.WorldConfig.FruitsPerDay;
-                bool foodExpires = world.WorldConfig.FoodExpires;
+                int fruitsPerDay = _world.WorldConfig.FruitsPerDay;
+                bool foodExpires = _world.WorldConfig.FoodExpires;
                 _shouldRun = true;
                 try
                 {
@@ -65,27 +50,27 @@ namespace Simulation
                         if (foodExpires)
                         {
                             // Remove old fruits
-                            world.GetAllEntities().FindAll(entity => entity is Fruit).ForEach(fruit =>
+                            _world.GetAllEntities().FindAll(entity => entity is Fruit).ForEach(fruit =>
                             {
                                 if (fruit.CreatedAt.AddMilliseconds(expirencyTime) <= DateTime.Now)
                                 {
-                                    world.RemoveEntity(fruit);
+                                    _world.RemoveEntity(fruit);
                                 }
                             });
                             // Remove dead creatures
-                            world.GetAllEntities().FindAll(entity => entity is Creature).ForEach(entity =>
+                            _world.GetAllEntities().FindAll(entity => entity is Creature).ForEach(entity =>
                             {
                                 if (entity is Creature creature && !creature.IsAlive && creature.DeathAt.AddMilliseconds(expirencyTime) <= DateTime.Now)
                                 {
-                                    world.RemoveEntity(creature);
+                                    _world.RemoveEntity(creature);
                                 }
                             });
                         }
                         // Add new fruits
                         for (int i = 0; i < fruitsPerDay; i++)
                         {
-                            var newFruit = new Fruit(StaticRandom.GenerateRandomPosition());
-                            world.AddEntity(newFruit);
+                            var newFruit = new Fruit(StaticRandom.GenerateRandomPosition(_world), _world);
+                            _world.AddEntity(newFruit);
                         }
                         Thread.Sleep(dayDuration);
                     }

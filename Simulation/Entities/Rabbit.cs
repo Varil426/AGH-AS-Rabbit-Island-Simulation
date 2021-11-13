@@ -247,7 +247,7 @@ namespace Simulation.Entities
                 && PregnantAt.AddMilliseconds(World.WorldConfig.RabbitConfig.PregnancyTimeScaled) <= DateTime.Now
                 && PregnantWith != null)
             {
-                var offspring = World.GenerateOffspring!(this, PregnantWith);
+                var offspring = World.GenerateOffspring(this, PregnantWith);
                 foreach (Creature creature in offspring)
                 {
                     World.AddCreature(creature);

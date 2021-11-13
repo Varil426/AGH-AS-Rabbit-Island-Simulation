@@ -20,10 +20,9 @@ public sealed class Simulation : ISimulation
 
     public ISimulationResults Run()
     {
-        // TODO Move scaled values to simulation config
-        Rabbit.RaceValues.RefreshValues();
-        Wolf.RaceValues.RefreshValues();
-        CreateInitiazlCreatures();
+        World.WorldConfig.RabbitConfig.RefreshValues(World);
+        World.WorldConfig.WolvesConfig.RefreshValues(World);
+        CreateInitialCreatures();
 
         World.StartSimulation();
 
@@ -31,17 +30,17 @@ public sealed class Simulation : ISimulation
         throw new NotImplementedException();
     }
 
-    private void CreateInitiazlCreatures()
+    private void CreateInitialCreatures()
     {
         // Create Rabbits
         for (int i = 0; i < World.WorldConfig.RabbitConfig.InitialPopulation; i++)
         {
-            World.AddCreatureWithoutStartingAThread(new Rabbit(StaticRandom.GenerateRandomPosition()));
+            World.AddCreatureWithoutStartingAThread(new Rabbit(StaticRandom.GenerateRandomPosition(World), World));
         }
         // Create Wolves
         for (int i = 0; i < World.WorldConfig.WolvesConfig.InitialPopulation; i++)
         {
-            World.AddCreatureWithoutStartingAThread(new Wolf(StaticRandom.GenerateRandomPosition()));
+            World.AddCreatureWithoutStartingAThread(new Wolf(StaticRandom.GenerateRandomPosition(World), World));
         }
     }
 
