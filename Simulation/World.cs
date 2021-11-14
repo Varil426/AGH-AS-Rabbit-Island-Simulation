@@ -45,6 +45,7 @@ namespace Simulation
             lock (_entities)
             {
                 _entities.Add(entity);
+                AddedEntity?.Invoke(entity);
             }
         }
 
@@ -92,7 +93,12 @@ namespace Simulation
         {
             lock (_entities)
             {
-                return _entities.Remove(entity);
+                if (_entities.Remove(entity))
+                {
+                    RemovedEntity?.Invoke(entity);
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -116,7 +122,6 @@ namespace Simulation
                 SetStartTime();
                 threads.ForEach(x => x.Start());
             }
-
         }
 
         public List<Entity> GetAllEntities()
@@ -196,5 +201,9 @@ namespace Simulation
         public delegate List<Creature> GenerateOffspringMethod(Creature mother, Creature father);
 
         public GenerateOffspringMethod GenerateOffspring;
+
+        internal event Action<Entity>? AddedEntity;
+
+        internal event Action<Entity>? RemovedEntity;
     }
 }
