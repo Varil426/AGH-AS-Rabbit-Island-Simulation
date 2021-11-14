@@ -61,82 +61,6 @@ namespace Visualization
             }
         }
 
-        /*private Config CreateConfigFromUserInput()
-        {
-            var rabbitsInitialPopulation = int.Parse(RabbitsInitialPopulationInput.Text);
-            var rabbitsMinChildren = int.Parse(RabbitsMinChildrenInput.Text);
-            var rabbitsMaxChildren = int.Parse(RabbitsMaxChildrenInput.Text);
-            var rabbitsPregnancyDuration = int.Parse(RabbitsPregnancyDurationInput.Text);
-            var rabbitsLifeExpectancy = int.Parse(RabbitsLifeExpectancy.Text);
-
-            var wolvesInitialPopulation = int.Parse(WolvesInitialPopulationInput.Text);
-            var wolvesMinChildren = int.Parse(WolvesMinChildrenInput.Text);
-            var wolvesMaxChildren = int.Parse(WolvesMaxChildrenInput.Text);
-            var wolvesPregnancyDuration = int.Parse(WolvesPregnancyDurationInput.Text);
-            var wolvesLifeExpectancy = int.Parse(WolvesLifeExpectancy.Text);
-
-            var timeRate = double.Parse(TimeRateInput.Text);
-            var deathFromOldAge = (bool)DeathFromOldAgeInput.IsChecked!;
-            var maxCreatures = int.Parse(MaxCreaturesInput.Text);
-            var fruitsPerDay = int.Parse(FruitsPerDayInput.Text);
-            var mapSize = int.Parse(MapSizeInput.Text);
-            var drawRanges = (bool)DrawRangesInput.IsChecked!;
-            var exportResultsToCSV = (bool)ExportResultsToCSVInput.IsChecked!;
-            var mutationChance = double.Parse(MutationChanceInput.Text, CultureInfo.InvariantCulture);
-            var mutationImpact = double.Parse(MutationImpactInput.Text, CultureInfo.InvariantCulture);
-
-            World.GenerateOffspringMethod generateOffspringMethod = OffspringGenerationMethodInput.SelectedIndex switch
-            {
-                0 => OffspringGeneration.OffspringGenerationWithMutations,
-                1 => OffspringGeneration.BasicOffspringGeneration,
-                _ => throw new ArgumentException("Invalid OffspringGenerationMethod selected"),
-            };
-
-            var config = new Config()
-            {
-                TimeRate = timeRate,
-                DeathFromOldAge = deathFromOldAge,
-                MaxCreatures = maxCreatures,
-                FruitsPerDay = fruitsPerDay,
-                DrawRanges = drawRanges,
-                MapSize = (mapSize, mapSize),
-                SelectedOffspringGenerationMethod = generateOffspringMethod,
-                ExportResultsToCSV = exportResultsToCSV,
-                MutationChance = mutationChance,
-                MutationImpact = mutationImpact
-            };
-
-            config.RabbitConfig.InitialPopulation = rabbitsInitialPopulation;
-            config.RabbitConfig.MinChildren = rabbitsMinChildren;
-            config.RabbitConfig.MaxChildren = rabbitsMaxChildren;
-            config.RabbitConfig.PregnancyDuration = rabbitsPregnancyDuration;
-            config.RabbitConfig.LifeExpectancy = rabbitsLifeExpectancy;
-
-            config.WolvesConfig.InitialPopulation = wolvesInitialPopulation;
-            config.WolvesConfig.MinChildren = wolvesMinChildren;
-            config.WolvesConfig.MaxChildren = wolvesMaxChildren;
-            config.WolvesConfig.PregnancyDuration = wolvesPregnancyDuration;
-            config.WolvesConfig.LifeExpectancy = wolvesLifeExpectancy;
-
-            return config;
-        }*/
-
-        private void CreateInitialCreatures()
-        {
-            /*
-            // Create Rabbits
-            for (int i = 0; i < world.WorldConfig.RabbitConfig.InitialPopulation; i++)
-            {
-                world.AddCreatureWithoutStartingAThread(new Rabbit(StaticRandom.GenerateRandomPosition()));
-            }
-            // Create Wolves
-            for (int i = 0; i < world.WorldConfig.WolvesConfig.InitialPopulation; i++)
-            {
-                world.AddCreatureWithoutStartingAThread(new Wolf(StaticRandom.GenerateRandomPosition()));
-            }
-            */
-        }
-
         private void StartSimulation(object sender, RoutedEventArgs e)
         {
             ConfigGrid.ColumnDefinitions[0].IsEnabled = false;
@@ -145,29 +69,15 @@ namespace Visualization
             StartStopButton.Click -= StartSimulation;
             StartStopButton.Click += StopSimulation;
 
-            // TODO Create simulation instance - use builder
-
             var simulationBuilder = new SimulationBuilder();
             var simulationParams = CreateConfigFromUserInput();
             _simulation = (Simulation.Simulation)simulationBuilder.CreateSimulation(simulationParams);
-
-            /*world.WorldConfig = CreateConfigFromUserInput();
-            world.WorldMap = new Map(world.WorldConfig.MapSize);
-            if (world.WorldConfig.SelectedOffspringGenerationMethod is World.GenerateOffspringMethod)
-            {
-                World.GenerateOffspring = world.WorldConfig.SelectedOffspringGenerationMethod;
-            }
-            // Scale values in simulation to TimeRate
-            Rabbit.RaceValues.RefreshValues();
-            Wolf.RaceValues.RefreshValues();
-            CreateInitialCreatures();*/
 
             _simulationWindow = new SimulationWindow(_simulation);
             _graphsWindow = new GraphsWindow(_simulation);
             _graphsWindow.Show();
             _simulationWindow.Show();
 
-            //world.StartSimulation();
             _simulation.Run();
         }
 
@@ -190,19 +100,11 @@ namespace Visualization
             var maxCreatures = int.Parse(MaxCreaturesInput.Text);
             var fruitsPerDay = int.Parse(FruitsPerDayInput.Text);
             var mapSize = int.Parse(MapSizeInput.Text);
-            // TODO What about this settings?
-            var drawRanges = (bool)DrawRangesInput.IsChecked!;
+            VisualizationConfig.Instance.DrawRanges = (bool)DrawRangesInput.IsChecked!;
+            // TODO Fix
             var exportResultsToCSV = (bool)ExportResultsToCSVInput.IsChecked!;
-            //////////////////////////////////
             var mutationChance = double.Parse(MutationChanceInput.Text, CultureInfo.InvariantCulture);
             var mutationImpact = double.Parse(MutationImpactInput.Text, CultureInfo.InvariantCulture);
-
-            /*World.GenerateOffspringMethod generateOffspringMethod = OffspringGenerationMethodInput.SelectedIndex switch
-            {
-                0 => OffspringGeneration.OffspringGenerationWithMutations,
-                1 => OffspringGeneration.BasicOffspringGeneration,
-                _ => throw new ArgumentException("Invalid OffspringGenerationMethod selected"),
-            };*/
 
             var simulationParams = new SimulationParams();
 

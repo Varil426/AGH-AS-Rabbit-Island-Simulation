@@ -22,7 +22,7 @@ namespace Visualization.EntitiesVisualization
                 Fill = Color
             };
             localCanvas.Children.Add(rectangle);
-            if (/*World.Instance.WorldConfig.DrawRanges &&*/ VisualizedEntity.IsAlive)
+            if (VisualizationConfig.Instance.DrawRanges && VisualizedEntity.IsAlive)
             {
                 var sightRange = new Ellipse()
                 {
