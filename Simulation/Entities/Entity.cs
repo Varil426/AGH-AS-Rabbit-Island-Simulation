@@ -2,7 +2,7 @@
 
 namespace Simulation.Entities
 {
-    internal abstract class Entity //: IWPFDrawable
+    public abstract class Entity //: IWPFDrawable
     {
         protected Entity(float x, float y, World world)
         {

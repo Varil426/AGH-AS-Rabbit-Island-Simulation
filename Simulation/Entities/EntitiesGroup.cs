@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a group of entities.
     /// </summary>
-    internal class EntitiesGroup : Entity
+    public class EntitiesGroup : Entity
     {
         /// <summary>
         /// All entities in a group.

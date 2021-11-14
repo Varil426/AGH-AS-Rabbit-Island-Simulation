@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Simulation.Entities
 {
-    internal class Rabbit : Creature
+    public class Rabbit : Creature
     {
         public Rabbit(Vector2 position, World world) : base(position, world)
         {

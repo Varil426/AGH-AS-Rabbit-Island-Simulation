@@ -1,13 +1,9 @@
 ﻿using Simulation.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Threading;
 
 namespace Simulation
 {
-    internal class World
+    public class World
     {
         private readonly List<Creature> _legacyCreatures;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simulation.Entities
 {
-    internal class RelativePosition : Point
+    public class RelativePosition : Point
     {
         public enum Direction
         {

@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Simulation.Entities
 {
-    internal interface ICreature
+    public interface ICreature
     {
         public void Act();
 

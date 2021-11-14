@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Simulation
 {
-    internal class Map
+    public class Map
     {
         public Map(int size) : this((size, size))
         {

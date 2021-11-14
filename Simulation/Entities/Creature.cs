@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Simulation.Entities
 {
-    internal abstract class Creature : Entity, ICreature
+    public abstract class Creature : Entity, ICreature
     {
         protected Creature(Vector2 position, World world, uint generation) : this(position, world)
         {

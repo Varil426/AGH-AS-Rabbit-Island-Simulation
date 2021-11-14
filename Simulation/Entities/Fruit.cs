@@ -2,7 +2,7 @@
 
 namespace Simulation.Entities
 {
-    internal class Fruit : Entity
+    public class Fruit : Entity
     {
         public Fruit(float x, float y, World world) : base(x, y, world)
         {

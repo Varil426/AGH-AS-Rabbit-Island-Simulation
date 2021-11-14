@@ -2,7 +2,7 @@
 
 namespace Simulation.Entities
 {
-    internal class Point : Entity
+    public class Point : Entity
     {
         public Point(float x, float y, World world) : base(x, y, world)
         {

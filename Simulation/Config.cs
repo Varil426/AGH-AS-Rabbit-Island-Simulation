@@ -1,11 +1,8 @@
 ﻿using Simulation.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Simulation
 {
-    internal class Config
+    public class Config
     {
         // TODO Add check for invalid values (or too big/small)
         public interface ICreatureConfig<Creature> where Creature : Entities.Creature
