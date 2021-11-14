@@ -2,7 +2,7 @@
 using OxyPlot.Series;
 using System;
 
-namespace Simulation.Plots
+namespace Visualization.Plots
 {
     internal class RabbitsPlotViewModel
     {

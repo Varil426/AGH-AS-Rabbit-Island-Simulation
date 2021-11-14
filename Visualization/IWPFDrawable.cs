@@ -1,9 +1,8 @@
 ﻿using System.Windows.Controls;
 
-namespace Simulation.Entities
+namespace Visualization;
+
+internal interface IWPFDrawable
 {
-    internal interface IWPFDrawable
-    {
-        public void DrawSelf(Canvas canvas);
-    }
+    public void DrawSelf(Canvas canvas);
 }

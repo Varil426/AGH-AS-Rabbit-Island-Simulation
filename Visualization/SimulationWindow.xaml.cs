@@ -1,12 +1,14 @@
 ﻿using Simulation.Entities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Visualization.EntitiesVisualization;
 
-namespace Simulation
+namespace Visualization
 {
     /// <summary>
     /// Interaction logic for SimulationWindow.xaml
@@ -17,17 +19,25 @@ namespace Simulation
 
         private bool _threadRun;
 
-        private readonly World world = World.Instance;
+        private readonly Simulation.Simulation _simulation;
+
+        private readonly List<ISimulationEntityVisualization> entitiesRepresentation = new();
+
+        //private readonly World world = World.Instance;
 
         private readonly Canvas canvas;
 
-        public SimulationWindow()
+        public SimulationWindow(Simulation.Simulation simulation)
         {
             InitializeComponent();
+
+            _simulation = simulation;
+            SubscribeToSimulationEvents();
+
             canvas = new Canvas
             {
-                Width = world.WorldMap.Size.Item1,
-                Height = world.WorldMap.Size.Item2,
+                Width = _simulation.World.WorldMap.Size.Item1,
+                Height = _simulation.World.WorldMap.Size.Item2,
                 Background = Brushes.Green
             };
             Plane.Children.Add(canvas);
@@ -37,6 +47,47 @@ namespace Simulation
                 IsBackground = true
             };
             _thread.Start();
+        }
+
+        private void SubscribeToSimulationEvents()
+        {
+            _simulation.EntityAdded += SimulationEntityAdded;
+            _simulation.EntityRemoved += SimulationEntityRemoved;
+        }
+
+        private void SimulationEntityAdded(Entity entity)
+        {
+            lock (entitiesRepresentation)
+            {
+                switch (entity)
+                {
+                    case Rabbit rabbit:
+                        entitiesRepresentation.Add(new RabbitVisualization(rabbit));
+                        break;
+                    case Fruit fruit:
+                        entitiesRepresentation.Add(new FruitVisualization(fruit));
+                        break;
+
+                    case Wolf wolf:
+                        entitiesRepresentation.Add(new WolfVisualization(wolf));
+                        break;
+
+                    default:
+                        throw new ArgumentException("Unrecognized type.");
+                }
+            }
+        }
+
+        private void SimulationEntityRemoved(Entity entity)
+        {
+            lock (entitiesRepresentation)
+            {
+                var visualization = entitiesRepresentation.FirstOrDefault(visualization => visualization.Entity == entity);
+                if (visualization != null)
+                {
+                    entitiesRepresentation.Remove(visualization);
+                }
+            }
         }
 
         private void DrawSimulation()
@@ -51,9 +102,12 @@ namespace Simulation
                     {
                         canvas.Children.Clear();
 
-                        foreach (var entity in world.GetAllEntities())
+                        lock (entitiesRepresentation)
                         {
-                            entity.DrawSelf(canvas);
+                            foreach (var entity in entitiesRepresentation)
+                            {
+                                entity.DrawSelf(canvas);
+                            }
                         }
                     });
                     Thread.Sleep(timeout);

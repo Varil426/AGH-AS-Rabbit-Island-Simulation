@@ -6,9 +6,10 @@ using System.Windows;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using Simulation;
 using Simulation.Entities;
 
-namespace Simulation
+namespace Visualization
 {
     /// <summary>
     /// Interaction logic for GraphsWindow.xaml
@@ -41,7 +42,7 @@ namespace Simulation
         private void RunUpdateStatus()
         {
             var timeout = 1000 / 5;
-            var world = World.Instance;
+            var world = _simulation.World;
             double simulationTimeMinutes;
             uint rabbitsGeneration = 0;
             uint wolvesGeneration = 0;
@@ -104,10 +105,12 @@ namespace Simulation
             return (xAxis, yAxis);
         }
 
-        public GraphsWindow()
+        public GraphsWindow(Simulation.Simulation simulation)
         {
             InitializeComponent();
             DataContext = this;
+
+            _simulation = simulation;
 
             _rabbitsData = new LineSeries();
             _wolvesData = new LineSeries();
@@ -140,6 +143,8 @@ namespace Simulation
             };
             _thread.Start();
         }
+
+        private readonly Simulation.Simulation _simulation;
 
         private readonly LineSeries _rabbitsData;
 

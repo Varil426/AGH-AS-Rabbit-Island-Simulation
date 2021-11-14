@@ -1,5 +1,5 @@
 ﻿using CsvHelper;
-using Simulation.Entities;
+using Simulation;
 using SimulationStandard;
 using System;
 using System.Globalization;
@@ -11,14 +11,14 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace Simulation
+namespace Visualization
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Simulation? _simulation;
+        private Simulation.Simulation? _simulation;
 
         private SimulationWindow? _simulationWindow;
 
@@ -149,7 +149,7 @@ namespace Simulation
 
             var simulationBuilder = new SimulationBuilder();
             var simulationParams = CreateConfigFromUserInput();
-            _simulation = simulationBuilder.CreateSimulation(simulationParams) as Simulation;
+            _simulation = (Simulation.Simulation)simulationBuilder.CreateSimulation(simulationParams);
 
             /*world.WorldConfig = CreateConfigFromUserInput();
             world.WorldMap = new Map(world.WorldConfig.MapSize);
@@ -162,12 +162,13 @@ namespace Simulation
             Wolf.RaceValues.RefreshValues();
             CreateInitialCreatures();*/
 
-            _simulationWindow = new SimulationWindow();
-            _graphsWindow = new GraphsWindow();
+            _simulationWindow = new SimulationWindow(_simulation);
+            _graphsWindow = new GraphsWindow(_simulation);
             _graphsWindow.Show();
             _simulationWindow.Show();
 
             //world.StartSimulation();
+            _simulation.Run();
         }
 
         private SimulationParams CreateConfigFromUserInput()
@@ -209,11 +210,12 @@ namespace Simulation
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.RabbitsMinChildren.ToString()] = rabbitsMinChildren;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.RabbitsMaxChildren.ToString()] = rabbitsMaxChildren;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.RabbitsPregnancyDuration.ToString()] = rabbitsPregnancyDuration;
-            simulationParams.Params[SimulationBuilder.SimulationParamsEnum.RabbitsLifeExpectancy.ToString()] = RabbitsLifeExpectancy;
+            simulationParams.Params[SimulationBuilder.SimulationParamsEnum.RabbitsLifeExpectancy.ToString()] = rabbitsLifeExpectancy;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.WolvesInitialPopulation.ToString()] = wolvesInitialPopulation;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.WolvesMinChildren.ToString()] = wolvesMinChildren;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.WolvesMaxChildren.ToString()] = wolvesMaxChildren;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.WolvesPregnancyDuration.ToString()] = wolvesPregnancyDuration;
+            simulationParams.Params[SimulationBuilder.SimulationParamsEnum.WolvesLifeExpectancy.ToString()] = wolvesLifeExpectancy;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.TimeRate.ToString()] = timeRate;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.DeathFromOldAge.ToString()] = deathFromOldAge;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.MaxCreatures.ToString()] = maxCreatures;
