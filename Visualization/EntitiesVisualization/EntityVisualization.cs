@@ -17,5 +17,7 @@ internal abstract class EntityVisualization<TEntity> : ISimulationEntityVisualiz
 
     public virtual SolidColorBrush Color { get; }
 
+    public Entity Entity => VisualizedEntity;
+
     public abstract void DrawSelf(Canvas canvas);
 }

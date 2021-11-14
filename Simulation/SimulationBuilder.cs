@@ -139,7 +139,7 @@ public class SimulationBuilder : ISimulationBuilder
             MaxCreatures = (int)simulationParams.Params[SimulationParamsEnum.MaxCreatures.ToString()],
             FruitsPerDay = (int)simulationParams.Params[SimulationParamsEnum.FruitsPerDay.ToString()],
             MapSize = ((int)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()], (int)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()]),
-            SelectedOffspringGenerationMethod = (int)simulationParams.Params[SimulationParamsEnum.TimeRate.ToString()] switch
+            SelectedOffspringGenerationMethod = (int)simulationParams.Params[SimulationParamsEnum.OffspringGenerationMethod.ToString()] switch
             {
                 0 => OffspringGeneration.OffspringGenerationWithMutations,
                 1 => OffspringGeneration.BasicOffspringGeneration,
