@@ -69,7 +69,23 @@ public class SimulationBuilder : ISimulationBuilder
 
     public enum SimulationResultsEnum
     {
-        // TODO
+        [Type(typeof(IList<long>))]
+        SimulationTime,
+
+        [Type(typeof(IList<int>))]
+        RabbitsAlive,
+
+        [Type(typeof(IList<int>))]
+        WolvesAlive,
+
+        [Type(typeof(IList<int>))]
+        FruitsPresent,
+
+        [Type(typeof(int))]
+        TotalRabbits,
+
+        [Type(typeof(int))]
+        TotalWolves,
     }
 
     public ISimulation CreateSimulation(ISimulationParams simulationParams)

@@ -24,7 +24,7 @@ namespace Simulation
             _directorThread?.Interrupt();
         }
 
-        public void Start()
+        public Thread Start()
         {
             _directorThread = new Thread(Run)
             {
@@ -32,6 +32,7 @@ namespace Simulation
                 IsBackground = true
             };
             _directorThread.Start();
+            return _directorThread;
         }
 
         private void Run()
@@ -45,7 +46,7 @@ namespace Simulation
                 _shouldRun = true;
                 try
                 {
-                    while (_shouldRun)
+                    while (_shouldRun && _world.GetAllEntities().OfType<ICreature>().Any(creature => creature.IsAlive))
                     {
                         if (foodExpires)
                         {

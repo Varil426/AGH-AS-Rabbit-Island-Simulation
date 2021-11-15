@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -78,7 +79,7 @@ namespace Visualization
             _graphsWindow.Show();
             _simulationWindow.Show();
 
-            _simulation.Run();
+            new Thread(() => _simulation.Run()).Start();
         }
 
         private SimulationParams CreateConfigFromUserInput()

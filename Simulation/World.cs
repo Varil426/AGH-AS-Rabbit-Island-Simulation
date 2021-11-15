@@ -102,11 +102,12 @@ namespace Simulation
             }
         }
 
-        public void StartSimulation()
+        public Thread StartSimulation()
         {
+            Thread directorThread;
             lock (_entities)
             {
-                _director.Start();
+                directorThread = _director.Start();
 
                 var threads = new List<Thread>();
                 foreach (ICreature creature in _entities.Where(x => x is ICreature))
@@ -122,6 +123,8 @@ namespace Simulation
                 SetStartTime();
                 threads.ForEach(x => x.Start());
             }
+
+            return directorThread;
         }
 
         public List<Entity> GetAllEntities()
@@ -197,6 +200,8 @@ namespace Simulation
         }
 
         public DateTime StartTime { get; private set; }
+
+        public long CurrentSimulationTime => (long)((DateTime.Now - StartTime).TotalMilliseconds / 1000 * WorldConfig.TimeRate);
 
         public delegate List<Creature> GenerateOffspringMethod(Creature mother, Creature father);
 
