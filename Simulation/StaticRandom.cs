@@ -1,6 +1,4 @@
-﻿using System;
-using System.Numerics;
-using System.Threading;
+﻿using System.Numerics;
 
 namespace Simulation
 {

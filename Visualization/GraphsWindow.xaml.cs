@@ -6,7 +6,6 @@ using System.Windows;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using Simulation;
 using Simulation.Entities;
 
 namespace Visualization

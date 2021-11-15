@@ -51,7 +51,10 @@ namespace Visualization
 
         private void SubscribeToSimulationEvents()
         {
+            _simulation.EntityAdded -= SimulationEntityAdded;
             _simulation.EntityAdded += SimulationEntityAdded;
+
+            _simulation.EntityRemoved -= SimulationEntityRemoved;
             _simulation.EntityRemoved += SimulationEntityRemoved;
         }
 

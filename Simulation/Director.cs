@@ -1,5 +1,4 @@
 ﻿using Simulation.Entities;
-using System.Threading;
 
 namespace Simulation
 {

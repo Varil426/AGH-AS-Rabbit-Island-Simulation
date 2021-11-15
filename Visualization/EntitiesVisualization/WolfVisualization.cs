@@ -1,5 +1,4 @@
-﻿using Simulation;
-using Simulation.Entities;
+﻿using Simulation.Entities;
 using System.Windows.Media;
 
 namespace Visualization.EntitiesVisualization;

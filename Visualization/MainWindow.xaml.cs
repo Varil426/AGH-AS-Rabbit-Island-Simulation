@@ -1,15 +1,11 @@
-﻿using CsvHelper;
-using Simulation;
+﻿using Simulation;
 using SimulationStandard;
 using System;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Visualization
