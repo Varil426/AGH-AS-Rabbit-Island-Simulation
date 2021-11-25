@@ -1,9 +1,11 @@
 ﻿using Simulation;
 using SimulationStandard;
+using SimulationStandard.Interfaces;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -75,7 +77,8 @@ namespace Visualization
             _graphsWindow.Show();
             _simulationWindow.Show();
 
-            new Thread(() => _simulation.Run()).Start();
+            var task = new Task<ISimulationResults>(() =>_simulation.Run()).ContinueWith(t => t.Result);
+            task.Start();
         }
 
         private SimulationParams CreateConfigFromUserInput()
@@ -171,6 +174,11 @@ namespace Visualization
 
         private void StopSimulation(object sender, RoutedEventArgs e)
         {
+            if (_simulation != null)
+            {
+                _simulation.Stop();
+            }
+
             ConfigGrid.ColumnDefinitions[0].IsEnabled = true;
             ConfigGrid.ColumnDefinitions[1].IsEnabled = true;
             StartStopButton.Content = "Run";

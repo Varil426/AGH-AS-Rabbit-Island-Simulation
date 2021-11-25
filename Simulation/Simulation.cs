@@ -51,6 +51,11 @@ public sealed class Simulation : ISimulation
         remove { World.RemovedEntity -= value; }
     }
 
+    /// <summary>
+    /// Stops the simulation.
+    /// </summary>
+    public void Stop() => World.Reset();
+
     private void CreateInitialCreatures()
     {
         // Create Rabbits
