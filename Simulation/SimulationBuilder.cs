@@ -86,6 +86,12 @@ public class SimulationBuilder : ISimulationBuilder
 
         [Type(typeof(int))]
         TotalWolves,
+
+        [Type(typeof(int))]
+        RabbitsGenerations,
+
+        [Type(typeof(int))]
+        WolvesGenerations,
     }
 
     public ISimulation CreateSimulation(ISimulationParams simulationParams)
