@@ -49,7 +49,7 @@ namespace Visualization
             while (_threadRun)
             {
                 Thread.Sleep(timeout);
-                simulationTimeMinutes = (DateTime.Now - world.StartTime).TotalMinutes * world.WorldConfig.TimeRate;
+                simulationTimeMinutes = world.StartTime != default(DateTime) ? (DateTime.Now - world.StartTime).TotalMilliseconds * world.WorldConfig.TimeRate / (1000 * 60) : 0;
 
                 var rabbits = world.GetAllEntities().OfType<Rabbit>();
                 if (rabbits.Any())
