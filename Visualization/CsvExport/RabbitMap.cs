@@ -6,6 +6,6 @@ internal class RabbitMap : CreatureMap<Rabbit>
 {
     public RabbitMap()
     {
-        Map(rabbit => rabbit.Fear).Name("fear");
+        Map(rabbit => rabbit.Fear).Name(nameof(Rabbit.Fear));
     }
 }

@@ -6,6 +6,6 @@ internal class WolfMap : CreatureMap<Wolf>
 {
     public WolfMap()
     {
-        Map(wolf => wolf.Attack).Name("attack");
+        Map(wolf => wolf.Attack).Name(nameof(Wolf.Attack));
     }
 }
