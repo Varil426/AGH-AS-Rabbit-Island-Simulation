@@ -271,15 +271,5 @@ namespace Simulation.Entities
                 Die();
             }
         }
-
-        /*
-        public class WolfMap : CreatureMap<Wolf>
-        {
-            public WolfMap()
-            {
-                Map(wolf => wolf.Attack).Name("attack");
-            }
-        }
-        */
     }
 }

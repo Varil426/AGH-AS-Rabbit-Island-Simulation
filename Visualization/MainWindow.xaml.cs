@@ -1,14 +1,18 @@
-﻿using Simulation;
+﻿using CsvHelper;
+using Simulation;
+using Simulation.Entities;
 using SimulationStandard;
 using SimulationStandard.Interfaces;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Visualization.CsvExport;
 
 namespace Visualization
 {
@@ -93,6 +97,9 @@ namespace Visualization
             {
                 var resultsWindow = new ResultsWindow(result);
                 resultsWindow.ShowDialog();
+
+                if (ExportResultsToCSVInput.IsChecked != null && ExportResultsToCSVInput.IsChecked.Value)
+                    ExportResultsToCSV(result);
             });
         }
 
@@ -145,10 +152,9 @@ namespace Visualization
             return simulationParams;
         }
 
-        private void ExportResultsToCSV()
+        private void ExportResultsToCSV(Simulation.SimulationResults results)
         {
-            // TODO
-            /*var pathToFileFormat = $"results{Path.DirectorySeparatorChar}{DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}--{OffspringGenerationMethodInput.Text}--{{0}}.csv";
+            var pathToFileFormat = $"results{Path.DirectorySeparatorChar}{DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}--{OffspringGenerationMethodInput.Text}--{{0}}.csv";
 
             var pathToRabbitsFile = string.Format(pathToFileFormat, "Rabbits");
             var rabbitsFileInfo = new FileInfo(pathToRabbitsFile);
@@ -158,15 +164,14 @@ namespace Visualization
             }
             using var rabbitsWriter = new StreamWriter(pathToRabbitsFile);
             using var rabbitsCSV = new CsvWriter(rabbitsWriter, CultureInfo.InvariantCulture);
-            rabbitsCSV.Context.RegisterClassMap<Creature.CreatureMap<Creature>>();
-            rabbitsCSV.Context.RegisterClassMap<Rabbit.RabbitMap>();
+            rabbitsCSV.Context.RegisterClassMap<RabbitMap>();
             rabbitsCSV.WriteHeader<Rabbit>();
             rabbitsCSV.NextRecord();
-            world.GetLegacyCreatures().OfType<Rabbit>().ToList().ForEach(rabbit =>
+            foreach (var rabbit in results.Rabbits)
             {
                 rabbitsCSV.WriteRecord(rabbit);
                 rabbitsCSV.NextRecord();
-            });
+            }
 
             var pathToWolvesFile = string.Format(pathToFileFormat, "Wolves");
             var wolvesFileInfo = new FileInfo(pathToWolvesFile);
@@ -176,15 +181,14 @@ namespace Visualization
             }
             using var wolvesWriter = new StreamWriter(pathToWolvesFile);
             using var wolvesCSV = new CsvWriter(wolvesWriter, CultureInfo.InvariantCulture);
-            wolvesCSV.Context.RegisterClassMap<Creature.CreatureMap<Creature>>();
-            wolvesCSV.Context.RegisterClassMap<Wolf.WolfMap>();
+            wolvesCSV.Context.RegisterClassMap<WolfMap>();
             wolvesCSV.WriteHeader<Wolf>();
             wolvesCSV.NextRecord();
-            world.GetLegacyCreatures().OfType<Wolf>().ToList().ForEach(wolf =>
+            foreach (var wolf in results.Wolves)
             {
                 wolvesCSV.WriteRecord(wolf);
                 wolvesCSV.NextRecord();
-            });*/
+            }
         }
 
         private void StopSimulationClicked(object sender, RoutedEventArgs e) => StopSimulation();
@@ -202,16 +206,6 @@ namespace Visualization
 
                 _graphsWindow?.StopAndClose();
                 _simulationWindow?.StopAndClose();
-
-                // TODO
-                /*
-                if (world.WorldConfig.ExportResultsToCSV)
-                {
-                    ExportResultsToCSV();
-                }
-
-                world.Reset();
-                */
             });
         }
     }

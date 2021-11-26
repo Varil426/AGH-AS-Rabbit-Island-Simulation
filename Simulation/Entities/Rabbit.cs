@@ -269,15 +269,5 @@ namespace Simulation.Entities
                 Die();
             }
         }
-
-        /*
-        public class RabbitMap : CreatureMap<Rabbit>
-        {
-            public RabbitMap()
-            {
-                Map(rabbit => rabbit.Fear).Name("fear");
-            }
-        }
-        */
     }
 }
