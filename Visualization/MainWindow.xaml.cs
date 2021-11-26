@@ -1,13 +1,16 @@
 ﻿using CsvHelper;
 using Simulation;
+using Simulation.Attributes;
 using Simulation.Entities;
 using SimulationStandard;
 using SimulationStandard.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +24,8 @@ namespace Visualization
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string CLI_COMMAND_PREFIX = "--";
+
         private Simulation.Simulation? _simulation;
 
         private SimulationWindow? _simulationWindow;
@@ -32,6 +37,113 @@ namespace Visualization
         public MainWindow()
         {
             InitializeComponent();
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                if (args.Length % 2 == 1)
+                {
+                    Visibility = Visibility.Hidden;
+
+                    try
+                    {
+                        RunCLI(args);
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("CLI ERROR");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid number of command line arguments.");
+                }
+                Close();
+            }
+        }
+
+        private void RunCLI(string[] args)
+        {
+            var simulationBuilder = new SimulationBuilder();
+            var simulationParams = CreateConfigurationFromCliArgs(args);
+            _simulation = (Simulation.Simulation)simulationBuilder.CreateSimulation(simulationParams);
+            var results = _simulation.Run();
+            ExportResultsToCSV(results);
+        }
+
+        private ISimulationParams CreateConfigurationFromCliArgs(string[] args)
+        {
+            // Get possible settings
+            var fields = typeof(SimulationBuilder.SimulationParamsEnum).GetFields();
+            var fieldToTypeDict = new Dictionary<FieldInfo, Type>();
+            foreach (var field in fields.Where(field => field.CustomAttributes.Any()))
+            {
+                fieldToTypeDict[field] = field.CustomAttributes
+                    .FirstOrDefault(x => x.AttributeType.IsAssignableTo(typeof(TypeAttribute)))?
+                    .ConstructorArguments.FirstOrDefault().Value as Type 
+                    ?? throw new Exception();
+            }
+
+            var enumerator = args.ToList().GetEnumerator();
+            // Skip first argument
+            enumerator.MoveNext();
+
+            var simulationParams = CreateDefaultSimulationParams();
+
+            while (enumerator.MoveNext())
+            {
+                var setting = enumerator.Current;
+                enumerator.MoveNext();
+                var value = enumerator.Current;
+
+                var field = fieldToTypeDict.Keys.FirstOrDefault(key => $"{CLI_COMMAND_PREFIX}{key.Name}" == setting) ?? throw new Exception();
+                var settingType = fieldToTypeDict[field];
+
+                switch (settingType.Name)
+                {
+                    case "Int32":
+                        simulationParams.Params[field.Name] = int.Parse(value);
+                        break;
+                    case "Double":
+                        simulationParams.Params[field.Name] = double.Parse(value);
+                        break;
+                    case "Boolean":
+                        simulationParams.Params[field.Name] = bool.Parse(value);
+                        break;
+                }
+            }
+
+            return simulationParams;
+        }
+
+        private ISimulationParams CreateDefaultSimulationParams()
+        {
+            var @params = new SimulationParams();
+
+            // Rabbits
+            @params.Params[SimulationBuilder.SimulationParamsEnum.RabbitsInitialPopulation.ToString()] = 24;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.RabbitsMinChildren.ToString()] = 1;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.RabbitsMaxChildren.ToString()] = 6;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.RabbitsPregnancyDuration.ToString()] = 1;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.RabbitsLifeExpectancy.ToString()] = 10;
+            
+            // Wolves
+            @params.Params[SimulationBuilder.SimulationParamsEnum.WolvesInitialPopulation.ToString()] = 12;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.WolvesMinChildren.ToString()] = 1;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.WolvesMaxChildren.ToString()] = 6;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.WolvesPregnancyDuration.ToString()] = 2;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.WolvesLifeExpectancy.ToString()] = 15;
+
+            // Rest
+            @params.Params[SimulationBuilder.SimulationParamsEnum.TimeRate.ToString()] = 1800;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.DeathFromOldAge.ToString()] = false;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.MaxCreatures.ToString()] = 200;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.FruitsPerDay.ToString()] = 60;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.MapSize.ToString()] = 800;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.MutationChance.ToString()] = 0.1;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.MutationImpact.ToString()] = 0.1;
+            @params.Params[SimulationBuilder.SimulationParamsEnum.OffspringGenerationMethod.ToString()] = 0;
+
+            return @params;
         }
 
         private void NumericTextBox(object sender, TextCompositionEventArgs e)

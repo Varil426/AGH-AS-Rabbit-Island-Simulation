@@ -2,7 +2,7 @@
 namespace Simulation.Attributes;
 
 [AttributeUsage(AttributeTargets.Field)]
-internal class TypeAttribute : Attribute
+public class TypeAttribute : Attribute
 {
     public TypeAttribute(Type type)
     {
