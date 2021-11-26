@@ -10,35 +10,35 @@ public class SimulationBuilder : ISimulationBuilder
     public enum SimulationParamsEnum
     {
         // Rabbits Settings
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         RabbitsInitialPopulation,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         RabbitsMinChildren,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         RabbitsMaxChildren,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         RabbitsPregnancyDuration,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         RabbitsLifeExpectancy,
 
         // Wolves Settings
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         WolvesInitialPopulation,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         WolvesMinChildren,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         WolvesMaxChildren,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         WolvesPregnancyDuration,
 
-        [Type(typeof(uint))]
+        [Type(typeof(int))]
         WolvesLifeExpectancy,
 
         // Simulation Settings
