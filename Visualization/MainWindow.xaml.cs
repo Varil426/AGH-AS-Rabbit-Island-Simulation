@@ -60,13 +60,13 @@ namespace Visualization
             }
         }
 
-        private void StartSimulation(object sender, RoutedEventArgs e)
+        private void StartSimulationClicked(object sender, RoutedEventArgs e)
         {
             ConfigGrid.ColumnDefinitions[0].IsEnabled = false;
             ConfigGrid.ColumnDefinitions[1].IsEnabled = false;
             StartStopButton.Content = "Stop";
-            StartStopButton.Click -= StartSimulation;
-            StartStopButton.Click += StopSimulation;
+            StartStopButton.Click -= StartSimulationClicked;
+            StartStopButton.Click += StopSimulationClicked;
 
             var simulationBuilder = new SimulationBuilder();
             var simulationParams = CreateConfigFromUserInput();
@@ -77,8 +77,23 @@ namespace Visualization
             _graphsWindow.Show();
             _simulationWindow.Show();
 
-            var task = new Task<ISimulationResults>(() =>_simulation.Run()).ContinueWith(t => t.Result);
+            var task = new Task<ISimulationResults>(() => _simulation.Run());
+            task.ContinueWith(t =>
+            {
+                OnSimulationStopped();
+
+                ShowResults(t.Result);
+            });
             task.Start();
+        }
+
+        private void ShowResults(ISimulationResults result)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var resultsWindow = new ResultsWindow(result);
+                resultsWindow.ShowDialog();
+            });
         }
 
         private SimulationParams CreateConfigFromUserInput()
@@ -172,31 +187,32 @@ namespace Visualization
             });*/
         }
 
-        private void StopSimulation(object sender, RoutedEventArgs e)
+        private void StopSimulationClicked(object sender, RoutedEventArgs e) => StopSimulation();
+        private void StopSimulation() => _simulation?.Stop();
+
+        private void OnSimulationStopped()
         {
-            if (_simulation != null)
+            Dispatcher.Invoke(() =>
             {
-                _simulation.Stop();
-            }
+                ConfigGrid.ColumnDefinitions[0].IsEnabled = true;
+                ConfigGrid.ColumnDefinitions[1].IsEnabled = true;
+                StartStopButton.Content = "Run";
+                StartStopButton.Click -= StopSimulationClicked;
+                StartStopButton.Click += StartSimulationClicked;
 
-            ConfigGrid.ColumnDefinitions[0].IsEnabled = true;
-            ConfigGrid.ColumnDefinitions[1].IsEnabled = true;
-            StartStopButton.Content = "Run";
-            StartStopButton.Click -= StopSimulation;
-            StartStopButton.Click += StartSimulation;
+                _graphsWindow?.StopAndClose();
+                _simulationWindow?.StopAndClose();
 
-            _graphsWindow?.StopAndClose();
-            _simulationWindow?.StopAndClose();
+                // TODO
+                /*
+                if (world.WorldConfig.ExportResultsToCSV)
+                {
+                    ExportResultsToCSV();
+                }
 
-            // TODO
-            /*
-            if (world.WorldConfig.ExportResultsToCSV)
-            {
-                ExportResultsToCSV();
-            }
-
-            world.Reset();
-            */
+                world.Reset();
+                */
+            });
         }
     }
 }

@@ -79,7 +79,7 @@
             <Image Source="Assets/AGH_LOGO.jpg" />
         </GroupBox>
         <GroupBox Grid.Column="2" Grid.Row="1" Margin="100" BorderThickness="0">
-            <Button Name="StartStopButton" Click="StartSimulation">Run</Button>
+            <Button Name="StartStopButton" Click="StartSimulationClicked">Run</Button>
         </GroupBox>
     </Grid>
 </Window>
