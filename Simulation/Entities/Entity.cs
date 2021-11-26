@@ -29,6 +29,11 @@ namespace Simulation.Entities
 
         public DateTime CreatedAt { get; }
 
+        /// <summary>
+        /// Time of creation in seconds of simulation time.
+        /// </summary>
+        public long CreatedAtInSimulationTime => CreatedAt > World.StartTime ? (long)((CreatedAt - World.StartTime).TotalMilliseconds * World.WorldConfig.TimeRate / 1000) : 0;
+
         public bool IsHidden { get; set; }
 
         // TODO IWPFDrawable - move

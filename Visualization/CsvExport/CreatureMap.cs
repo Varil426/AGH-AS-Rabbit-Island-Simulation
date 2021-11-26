@@ -8,14 +8,16 @@ internal abstract class CreatureMap<TCreatureType> : ClassMap<TCreatureType> whe
 {
     public CreatureMap()
     {
-        Map(creature => creature.CreatedAt).Name("createdAt");
-        Map(creature => creature.DeathAt).Name("deathAt");
-        Map(creature => creature.Generation).Name("generation");
-        Map(creature => creature.MaxHealth).Name("maxHealth");
-        Map(creature => creature.MaxEnergy).Name("maxEnergy");
-        Map(creature => creature.MovementSpeed).Name("movementSpeed");
-        Map(creature => creature.SightRange).Name("sightRange");
-        Map(creature => creature.InteractionRange).Name("interactionRange");
-        Map(creature => creature.Gender).Name("gender");
+        Map(creature => creature.CreatedAt).Name(nameof(Creature.CreatedAt));
+        Map(creature => creature.DeathAt).Name(nameof(Creature.DeathAt));
+        Map(creature => creature.CreatedAtInSimulationTime).Name(nameof(Creature.CreatedAtInSimulationTime));
+        Map(creature => creature.DeathAtInSimulationTime).Name(nameof(Creature.DeathAtInSimulationTime));
+        Map(creature => creature.Generation).Name(nameof(Creature.Generation));
+        Map(creature => creature.MaxHealth).Name(nameof(Creature.MaxHealth));
+        Map(creature => creature.MaxEnergy).Name(nameof(Creature.MaxEnergy));
+        Map(creature => creature.MovementSpeed).Name(nameof(Creature.MovementSpeed));
+        Map(creature => creature.SightRange).Name(nameof(Creature.SightRange));
+        Map(creature => creature.InteractionRange).Name(nameof(Creature.InteractionRange));
+        Map(creature => creature.Gender).Name(nameof(Creature.Gender));
     }
 }

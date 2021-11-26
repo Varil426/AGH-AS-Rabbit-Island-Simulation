@@ -171,6 +171,11 @@ namespace Simulation.Entities
 
         public DateTime DeathAt { get; protected set; }
 
+        /// <summary>
+        /// Time of death in seconds of simulation time.
+        /// </summary>
+        public long DeathAtInSimulationTime => DeathAt != default(DateTime) ? (long)((DeathAt - World.StartTime).TotalMilliseconds * World.WorldConfig.TimeRate / 1000) : 0;
+
         public DateTime PregnantAt { get; protected set; }
 
         public Creature? PregnantWith { get; protected set; }
