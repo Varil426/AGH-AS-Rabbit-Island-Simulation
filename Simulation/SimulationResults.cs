@@ -6,8 +6,6 @@ public class SimulationResults : SimulationStandard.SimulationResults
 {
     private readonly Simulation _simulation;
 
-    private readonly List<Creature> _creatureList = new();
-
     public SimulationResults(Simulation simulation)
     {
         _simulation = simulation;
@@ -36,7 +34,6 @@ public class SimulationResults : SimulationStandard.SimulationResults
         switch (entity)
         {
             case Creature creature:
-                _creatureList.Add(creature);
                 switch (creature)
                 {
                     case Rabbit:
@@ -65,7 +62,6 @@ public class SimulationResults : SimulationStandard.SimulationResults
         AddRabbitsAlive(allEntities.Count(x => x is Rabbit));
         AddWolvesAlive(allEntities.Count(x => x is Wolf));
         AddFruitsPresent(allEntities.Count(x => x is Fruit));
-        _creatureList.AddRange(allEntities.OfType<Creature>());
     }
 
     private void CreateSimulationSnapshot()
@@ -99,8 +95,8 @@ public class SimulationResults : SimulationStandard.SimulationResults
     public int RabbitsGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()] = value; }
     public int WolvesGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()] = value; }
 
-    public IReadOnlyList<Wolf> Wolves => _creatureList.OfType<Wolf>().ToList().AsReadOnly();
-    public IReadOnlyList<Rabbit> Rabbits => _creatureList.OfType<Rabbit>().ToList().AsReadOnly();
+    public IReadOnlyList<Wolf> Wolves => _simulation.World.GetLegacyCreatures().OfType<Wolf>().ToList().AsReadOnly();
+    public IReadOnlyList<Rabbit> Rabbits => _simulation.World.GetLegacyCreatures().OfType<Rabbit>().ToList().AsReadOnly();
 
     private void AddTimestamp(long timestamp) => ((IList<long>)Results[SimulationBuilder.SimulationResultsEnum.SimulationTime.ToString()]).Add(timestamp);
     private void AddRabbitsAlive(int rabbitsAlive) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.RabbitsAlive.ToString()]).Add(rabbitsAlive);

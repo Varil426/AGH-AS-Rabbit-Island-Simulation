@@ -183,8 +183,8 @@ namespace Simulation
                         creature.StopThread();
                     }
                 });
-                _entities.Clear();
-                _legacyCreatures.Clear();
+                //_entities.Clear();
+                //_legacyCreatures.Clear();
             }
         }
 
