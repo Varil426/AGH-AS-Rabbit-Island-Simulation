@@ -2,9 +2,11 @@
 
 namespace Simulation;
 
-internal class SimulationResults : SimulationStandard.SimulationResults
+public class SimulationResults : SimulationStandard.SimulationResults
 {
     private readonly Simulation _simulation;
+
+    private readonly List<Creature> _creatureList = new();
 
     public SimulationResults(Simulation simulation)
     {
@@ -34,6 +36,7 @@ internal class SimulationResults : SimulationStandard.SimulationResults
         switch (entity)
         {
             case Creature creature:
+                _creatureList.Add(creature);
                 switch (creature)
                 {
                     case Rabbit:
@@ -62,6 +65,7 @@ internal class SimulationResults : SimulationStandard.SimulationResults
         AddRabbitsAlive(allEntities.Count(x => x is Rabbit));
         AddWolvesAlive(allEntities.Count(x => x is Wolf));
         AddFruitsPresent(allEntities.Count(x => x is Fruit));
+        _creatureList.AddRange(allEntities.OfType<Creature>());
     }
 
     private void CreateSimulationSnapshot()
@@ -89,13 +93,17 @@ internal class SimulationResults : SimulationStandard.SimulationResults
         WolvesGenerations = 0;
     }
 
-    public void AddTimestamp(long timestamp) => ((IList<long>)Results[SimulationBuilder.SimulationResultsEnum.SimulationTime.ToString()]).Add(timestamp);
-    public void AddRabbitsAlive(int rabbitsAlive) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.RabbitsAlive.ToString()]).Add(rabbitsAlive);
-    public void AddWolvesAlive(int wolvesAlive) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.WolvesAlive.ToString()]).Add(wolvesAlive);
-    public void AddFruitsPresent(int fruitsPresent) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.FruitsPresent.ToString()]).Add(fruitsPresent);
-    public int TotalRabbits { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalRabbits.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.TotalRabbits.ToString()] = value; }
-    public int TotalWolves { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalWolves.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.TotalWolves.ToString()] = value; }
-    public int TotalFruits { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalFruits.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.TotalFruits.ToString()] = value; }
-    public int RabbitsGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()] = value; }
-    public int WolvesGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()] = value; }
+    public int TotalRabbits { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalRabbits.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.TotalRabbits.ToString()] = value; }
+    public int TotalWolves { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalWolves.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.TotalWolves.ToString()] = value; }
+    public int TotalFruits { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalFruits.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.TotalFruits.ToString()] = value; }
+    public int RabbitsGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()] = value; }
+    public int WolvesGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()]; private set => Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()] = value; }
+
+    public IReadOnlyList<Wolf> Wolves => _creatureList.OfType<Wolf>().ToList().AsReadOnly();
+    public IReadOnlyList<Rabbit> Rabbits => _creatureList.OfType<Rabbit>().ToList().AsReadOnly();
+
+    private void AddTimestamp(long timestamp) => ((IList<long>)Results[SimulationBuilder.SimulationResultsEnum.SimulationTime.ToString()]).Add(timestamp);
+    private void AddRabbitsAlive(int rabbitsAlive) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.RabbitsAlive.ToString()]).Add(rabbitsAlive);
+    private void AddWolvesAlive(int wolvesAlive) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.WolvesAlive.ToString()]).Add(wolvesAlive);
+    private void AddFruitsPresent(int fruitsPresent) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.FruitsPresent.ToString()]).Add(fruitsPresent);
 }

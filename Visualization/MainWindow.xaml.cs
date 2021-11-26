@@ -77,7 +77,7 @@ namespace Visualization
             _graphsWindow.Show();
             _simulationWindow.Show();
 
-            var task = new Task<ISimulationResults>(() => _simulation.Run());
+            var task = new Task<Simulation.SimulationResults>(() => _simulation.Run());
             task.ContinueWith(t =>
             {
                 OnSimulationStopped();
@@ -87,7 +87,7 @@ namespace Visualization
             task.Start();
         }
 
-        private void ShowResults(ISimulationResults result)
+        private void ShowResults(Simulation.SimulationResults result)
         {
             Dispatcher.Invoke(() =>
             {

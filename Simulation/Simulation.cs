@@ -20,7 +20,9 @@ public sealed class Simulation : ISimulation
         // There is nothing to dispose.
     }
 
-    public ISimulationResults Run()
+    ISimulationResults ISimulation.Run() => Run();
+
+    public SimulationResults Run()
     {
         World.WorldConfig.RabbitConfig.RefreshValues(World);
         World.WorldConfig.WolvesConfig.RefreshValues(World);

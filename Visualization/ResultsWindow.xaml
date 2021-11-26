@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Visualization"
         mc:Ignorable="d"
-        Title="Results" Height="220" Width="400"
+        Title="Results" SizeToContent="Height" Width="400"
         ResizeMode="NoResize">
-    <StackPanel>
+    <StackPanel Height="Auto">
         <GroupBox Header="Rabbits">
             <StackPanel>
                 <TextBlock Name="TextBlockRabbitsTotal">Total:</TextBlock>
                 <TextBlock x:Name="TextBlockRabbitsGeneration">Generation:</TextBlock>
+                <StackPanel Name="StackPanelRabbitsStatistics" Height="Auto" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Wolves">
             <StackPanel>
                 <TextBlock Name="TextBlockWolvesTotal">Total:</TextBlock>
                 <TextBlock x:Name="TextBlockWolvesGeneration">Generation:</TextBlock>
+                <StackPanel Name="StackPanelWolvesStatistics" Height="Auto" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Fruits">
