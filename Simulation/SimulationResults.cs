@@ -31,21 +31,26 @@ internal class SimulationResults : SimulationStandard.SimulationResults
     {
         CreateSimulationSnapshot();
 
-        if (entity is Creature creature)
+        switch (entity)
         {
-            switch (creature)
-            {
-                case Rabbit:
-                    TotalRabbits++;
-                    if (creature.Generation > RabbitsGenerations)
-                        RabbitsGenerations = (int)creature.Generation;
-                    break;
-                case Wolf:
-                    TotalWolves++;
-                    if (creature.Generation > WolvesGenerations)
-                        WolvesGenerations = (int)creature.Generation;
-                    break;
-            }
+            case Creature creature:
+                switch (creature)
+                {
+                    case Rabbit:
+                        TotalRabbits++;
+                        if (creature.Generation > RabbitsGenerations)
+                            RabbitsGenerations = (int)creature.Generation;
+                        break;
+                    case Wolf:
+                        TotalWolves++;
+                        if (creature.Generation > WolvesGenerations)
+                            WolvesGenerations = (int)creature.Generation;
+                        break;
+                }
+                break;
+            case Fruit:
+                TotalFruits++;
+                break;
         }
     }
 
@@ -79,6 +84,7 @@ internal class SimulationResults : SimulationStandard.SimulationResults
 
         TotalRabbits = _simulation.World.GetAllEntities().OfType<Rabbit>().Count();
         TotalWolves = _simulation.World.GetAllEntities().OfType<Wolf>().Count();
+        TotalFruits = 0;
         RabbitsGenerations = 0;
         WolvesGenerations = 0;
     }
@@ -89,6 +95,7 @@ internal class SimulationResults : SimulationStandard.SimulationResults
     public void AddFruitsPresent(int fruitsPresent) => ((IList<int>)Results[SimulationBuilder.SimulationResultsEnum.FruitsPresent.ToString()]).Add(fruitsPresent);
     public int TotalRabbits { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalRabbits.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.TotalRabbits.ToString()] = value; }
     public int TotalWolves { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalWolves.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.TotalWolves.ToString()] = value; }
+    public int TotalFruits { get => (int)Results[SimulationBuilder.SimulationResultsEnum.TotalFruits.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.TotalFruits.ToString()] = value; }
     public int RabbitsGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.RabbitsGenerations.ToString()] = value; }
     public int WolvesGenerations { get => (int)Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()]; set => Results[SimulationBuilder.SimulationResultsEnum.WolvesGenerations.ToString()] = value; }
 }
