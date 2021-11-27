@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Rabbit Island Simulation AGH" MinHeight="500" Height="600" MinWidth="750" Width="1000">
+        Title="Rabbit Island Simulation AGH" MinHeight="605" Height="600" MinWidth="750" Width="1000">
     <Grid Name="ConfigGrid" Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
