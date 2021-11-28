@@ -46,6 +46,7 @@ namespace Visualization
 
                     try
                     {
+                        ConsoleAllocator.ShowConsoleWindow();
                         RunCLI(args);
                     }
                     catch (Exception)
@@ -66,12 +67,16 @@ namespace Visualization
             var simulationBuilder = new SimulationBuilder();
             var simulationParams = CreateConfigurationFromCliArgs(args);
             _simulation = (Simulation.Simulation)simulationBuilder.CreateSimulation(simulationParams);
+            Console.WriteLine("Starting simulation.");
             var results = _simulation.Run();
+            Console.WriteLine("Simulation has finished.");
+            Console.WriteLine("Exporting results.");
             ExportResultsToCSV(results);
         }
 
         private ISimulationParams CreateConfigurationFromCliArgs(string[] args)
         {
+            Console.WriteLine("Creating Config...");
             // Get possible settings
             var fields = typeof(SimulationBuilder.SimulationParamsEnum).GetFields();
             var fieldToTypeDict = new Dictionary<FieldInfo, Type>();
