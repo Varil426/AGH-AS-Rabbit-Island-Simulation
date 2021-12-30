@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Simulation</RootNamespace>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	
   <ItemGroup>
     <Reference Include="SimulationStandard">
       <HintPath>..\External References\SimulationStandard.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+	
   <ItemGroup>
 	  <Using Include="System" />
 	  <Using Include="System.Collections.Generic" />

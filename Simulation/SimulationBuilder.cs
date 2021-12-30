@@ -117,7 +117,7 @@ public class SimulationBuilder : ISimulationBuilder
         return simulation;
     }
 
-    public ISimulationResultsTemplate CreateSimulationResultsTemplate()
+    public SimulationResultsTemplate CreateSimulationResultsTemplate()
     {
         var simulationResultTemplate = new SimulationResultsTemplate();
         var simulationResultsEnumFields = typeof(SimulationResultsEnum).GetFields();
@@ -133,7 +133,7 @@ public class SimulationBuilder : ISimulationBuilder
         return simulationResultTemplate;
     }
 
-    public ISimulationParamsTemplate CreateSimulationParamsTemplate()
+    public SimulationParamsTemplate CreateSimulationParamsTemplate()
     {
         var simulationParamsTemplate = new SimulationParamsTemplate();
         var simulationResultsEnumFields = typeof(SimulationParamsEnum).GetFields();
