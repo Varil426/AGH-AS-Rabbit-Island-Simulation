@@ -10,35 +10,35 @@ public class SimulationBuilder : ISimulationBuilder
     public enum SimulationParamsEnum
     {
         // Rabbits Settings
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         RabbitsInitialPopulation,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         RabbitsMinChildren,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         RabbitsMaxChildren,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         RabbitsPregnancyDuration,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         RabbitsLifeExpectancy,
 
         // Wolves Settings
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         WolvesInitialPopulation,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         WolvesMinChildren,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         WolvesMaxChildren,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         WolvesPregnancyDuration,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         WolvesLifeExpectancy,
 
         // Simulation Settings
@@ -48,13 +48,13 @@ public class SimulationBuilder : ISimulationBuilder
         [Type(typeof(bool))]
         DeathFromOldAge,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         MaxCreatures,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         FruitsPerDay,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         MapSize,
 
         [Type(typeof(double))]
@@ -63,7 +63,7 @@ public class SimulationBuilder : ISimulationBuilder
         [Type(typeof(double))]
         MutationImpact,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         OffspringGenerationMethod,
     }
 
@@ -72,28 +72,28 @@ public class SimulationBuilder : ISimulationBuilder
         [Type(typeof(IList<long>))]
         SimulationTime,
 
-        [Type(typeof(IList<int>))]
+        [Type(typeof(IList<long>))]
         RabbitsAlive,
 
-        [Type(typeof(IList<int>))]
+        [Type(typeof(IList<long>))]
         WolvesAlive,
 
-        [Type(typeof(IList<int>))]
+        [Type(typeof(IList<long>))]
         FruitsPresent,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         TotalRabbits,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         TotalWolves,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         TotalFruits,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         RabbitsGenerations,
 
-        [Type(typeof(int))]
+        [Type(typeof(long))]
         WolvesGenerations,
     }
 
@@ -110,7 +110,7 @@ public class SimulationBuilder : ISimulationBuilder
             World = new()
             {
                 WorldConfig = CreateWorldConfig(simulationParams),
-                WorldMap = new Map((int)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()])
+                WorldMap = new Map((int)(long)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()])
             }
         };
 
@@ -161,10 +161,10 @@ public class SimulationBuilder : ISimulationBuilder
         {
             TimeRate = (double)simulationParams.Params[SimulationParamsEnum.TimeRate.ToString()],
             DeathFromOldAge = (bool)simulationParams.Params[SimulationParamsEnum.DeathFromOldAge.ToString()],
-            MaxCreatures = (int)simulationParams.Params[SimulationParamsEnum.MaxCreatures.ToString()],
-            FruitsPerDay = (int)simulationParams.Params[SimulationParamsEnum.FruitsPerDay.ToString()],
-            MapSize = ((int)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()], (int)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()]),
-            SelectedOffspringGenerationMethod = (int)simulationParams.Params[SimulationParamsEnum.OffspringGenerationMethod.ToString()] switch
+            MaxCreatures = (long)simulationParams.Params[SimulationParamsEnum.MaxCreatures.ToString()],
+            FruitsPerDay = (long)simulationParams.Params[SimulationParamsEnum.FruitsPerDay.ToString()],
+            MapSize = ((long)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()], (long)simulationParams.Params[SimulationParamsEnum.MapSize.ToString()]),
+            SelectedOffspringGenerationMethod = (long)simulationParams.Params[SimulationParamsEnum.OffspringGenerationMethod.ToString()] switch
             {
                 0 => OffspringGeneration.OffspringGenerationWithMutations,
                 1 => OffspringGeneration.BasicOffspringGeneration,
@@ -174,17 +174,17 @@ public class SimulationBuilder : ISimulationBuilder
             MutationImpact = (double)simulationParams.Params[SimulationParamsEnum.MutationImpact.ToString()],
         };
 
-        config.RabbitConfig.InitialPopulation = (int)simulationParams.Params[SimulationParamsEnum.RabbitsInitialPopulation.ToString()];
-        config.RabbitConfig.MinChildren = (int)simulationParams.Params[SimulationParamsEnum.RabbitsMinChildren.ToString()];
-        config.RabbitConfig.MaxChildren = (int)simulationParams.Params[SimulationParamsEnum.RabbitsMaxChildren.ToString()];
-        config.RabbitConfig.PregnancyDuration = (int)simulationParams.Params[SimulationParamsEnum.RabbitsPregnancyDuration.ToString()];
-        config.RabbitConfig.LifeExpectancy = (int)simulationParams.Params[SimulationParamsEnum.RabbitsLifeExpectancy.ToString()];
+        config.RabbitConfig.InitialPopulation = (long)simulationParams.Params[SimulationParamsEnum.RabbitsInitialPopulation.ToString()];
+        config.RabbitConfig.MinChildren = (long)simulationParams.Params[SimulationParamsEnum.RabbitsMinChildren.ToString()];
+        config.RabbitConfig.MaxChildren = (long)simulationParams.Params[SimulationParamsEnum.RabbitsMaxChildren.ToString()];
+        config.RabbitConfig.PregnancyDuration = (long)simulationParams.Params[SimulationParamsEnum.RabbitsPregnancyDuration.ToString()];
+        config.RabbitConfig.LifeExpectancy = (long)simulationParams.Params[SimulationParamsEnum.RabbitsLifeExpectancy.ToString()];
 
-        config.WolvesConfig.InitialPopulation = (int)simulationParams.Params[SimulationParamsEnum.WolvesInitialPopulation.ToString()];
-        config.WolvesConfig.MinChildren = (int)simulationParams.Params[SimulationParamsEnum.WolvesMinChildren.ToString()];
-        config.WolvesConfig.MaxChildren = (int)simulationParams.Params[SimulationParamsEnum.WolvesMaxChildren.ToString()];
-        config.WolvesConfig.PregnancyDuration = (int)simulationParams.Params[SimulationParamsEnum.WolvesPregnancyDuration.ToString()];
-        config.WolvesConfig.LifeExpectancy = (int)simulationParams.Params[SimulationParamsEnum.WolvesLifeExpectancy.ToString()];
+        config.WolvesConfig.InitialPopulation = (long)simulationParams.Params[SimulationParamsEnum.WolvesInitialPopulation.ToString()];
+        config.WolvesConfig.MinChildren = (long)simulationParams.Params[SimulationParamsEnum.WolvesMinChildren.ToString()];
+        config.WolvesConfig.MaxChildren = (long)simulationParams.Params[SimulationParamsEnum.WolvesMaxChildren.ToString()];
+        config.WolvesConfig.PregnancyDuration = (long)simulationParams.Params[SimulationParamsEnum.WolvesPregnancyDuration.ToString()];
+        config.WolvesConfig.LifeExpectancy = (long)simulationParams.Params[SimulationParamsEnum.WolvesLifeExpectancy.ToString()];
 
         return config;
     }

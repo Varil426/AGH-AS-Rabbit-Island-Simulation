@@ -9,15 +9,15 @@ namespace Simulation
         {
             Type CreatureType { get; set; }
 
-            int InitialPopulation { get; set; }
+            long InitialPopulation { get; set; }
 
-            int MinChildren { get; set; }
+            long MinChildren { get; set; }
 
-            int MaxChildren { get; set; }
+            long MaxChildren { get; set; }
 
-            int PregnancyDuration { get; set; }
+            long PregnancyDuration { get; set; }
 
-            int LifeExpectancy { get; set; }
+            long LifeExpectancy { get; set; }
 
             int LifeExpectancyScaled { get; }
 
@@ -45,15 +45,15 @@ namespace Simulation
 
             public Type CreatureType { get; set; }
 
-            public int InitialPopulation { get; set; }
+            public long InitialPopulation { get; set; }
 
-            public int MinChildren { get; set; }
+            public long MinChildren { get; set; }
 
-            public int MaxChildren { get; set; }
+            public long MaxChildren { get; set; }
 
-            public int PregnancyDuration { get; set; }
+            public long PregnancyDuration { get; set; }
 
-            public int LifeExpectancy { get; set; }
+            public long LifeExpectancy { get; set; }
 
             /// <summary>
             /// Scales values to match the Time Rate of the World.
@@ -108,17 +108,17 @@ namespace Simulation
 
         public Config()
         {
-            RabbitConfig = new CreatureConfig<Rabbit> { InitialPopulationCredits = 150};
-            WolvesConfig = new CreatureConfig<Wolf> { InitialPopulationCredits = 100};
+            RabbitConfig = new CreatureConfig<Rabbit> { InitialPopulationCredits = 150 };
+            WolvesConfig = new CreatureConfig<Wolf> { InitialPopulationCredits = 100 };
         }
 
-        private (int, int) _mapSize;
+        private (long, long) _mapSize;
 
         public double TimeRate { get; set; }
 
         public bool DeathFromOldAge { get; set; }
 
-        public int MaxCreatures { get; set; }
+        public long MaxCreatures { get; set; }
 
         private double _mutationChance;
 
@@ -150,7 +150,7 @@ namespace Simulation
             }
         }
 
-        public int FruitsPerDay { get; set; }
+        public long FruitsPerDay { get; set; }
 
         public bool FoodExpires { get; set; }
 
@@ -160,7 +160,7 @@ namespace Simulation
 
         public World.GenerateOffspringMethod? SelectedOffspringGenerationMethod { get; set; }
 
-        public (int, int) MapSize
+        public (long, long) MapSize
         {
             get => _mapSize;
 

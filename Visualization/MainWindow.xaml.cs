@@ -222,23 +222,23 @@ namespace Visualization
 
         private SimulationParams CreateConfigFromUserInput()
         {
-            var rabbitsInitialPopulation = int.Parse(RabbitsInitialPopulationInput.Text);
-            var rabbitsMinChildren = int.Parse(RabbitsMinChildrenInput.Text);
-            var rabbitsMaxChildren = int.Parse(RabbitsMaxChildrenInput.Text);
-            var rabbitsPregnancyDuration = int.Parse(RabbitsPregnancyDurationInput.Text);
-            var rabbitsLifeExpectancy = int.Parse(RabbitsLifeExpectancy.Text);
+            var rabbitsInitialPopulation = long.Parse(RabbitsInitialPopulationInput.Text);
+            var rabbitsMinChildren = long.Parse(RabbitsMinChildrenInput.Text);
+            var rabbitsMaxChildren = long.Parse(RabbitsMaxChildrenInput.Text);
+            var rabbitsPregnancyDuration = long.Parse(RabbitsPregnancyDurationInput.Text);
+            var rabbitsLifeExpectancy = long.Parse(RabbitsLifeExpectancy.Text);
 
-            var wolvesInitialPopulation = int.Parse(WolvesInitialPopulationInput.Text);
-            var wolvesMinChildren = int.Parse(WolvesMinChildrenInput.Text);
-            var wolvesMaxChildren = int.Parse(WolvesMaxChildrenInput.Text);
-            var wolvesPregnancyDuration = int.Parse(WolvesPregnancyDurationInput.Text);
-            var wolvesLifeExpectancy = int.Parse(WolvesLifeExpectancy.Text);
+            var wolvesInitialPopulation = long.Parse(WolvesInitialPopulationInput.Text);
+            var wolvesMinChildren = long.Parse(WolvesMinChildrenInput.Text);
+            var wolvesMaxChildren = long.Parse(WolvesMaxChildrenInput.Text);
+            var wolvesPregnancyDuration = long.Parse(WolvesPregnancyDurationInput.Text);
+            var wolvesLifeExpectancy = long.Parse(WolvesLifeExpectancy.Text);
 
             var timeRate = double.Parse(TimeRateInput.Text);
             var deathFromOldAge = (bool)DeathFromOldAgeInput.IsChecked!;
-            var maxCreatures = int.Parse(MaxCreaturesInput.Text);
-            var fruitsPerDay = int.Parse(FruitsPerDayInput.Text);
-            var mapSize = int.Parse(MapSizeInput.Text);
+            var maxCreatures = long.Parse(MaxCreaturesInput.Text);
+            var fruitsPerDay = long.Parse(FruitsPerDayInput.Text);
+            var mapSize = long.Parse(MapSizeInput.Text);
             VisualizationConfig.Instance.DrawRanges = (bool)DrawRangesInput.IsChecked!;
             // TODO Fix
             var exportResultsToCSV = (bool)ExportResultsToCSVInput.IsChecked!;
@@ -264,7 +264,7 @@ namespace Visualization
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.MapSize.ToString()] = mapSize;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.MutationChance.ToString()] = mutationChance;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.MutationImpact.ToString()] = mutationImpact;
-            simulationParams.Params[SimulationBuilder.SimulationParamsEnum.OffspringGenerationMethod.ToString()] = OffspringGenerationMethodInput.SelectedIndex;
+            simulationParams.Params[SimulationBuilder.SimulationParamsEnum.OffspringGenerationMethod.ToString()] = (long)OffspringGenerationMethodInput.SelectedIndex;
 
             return simulationParams;
         }

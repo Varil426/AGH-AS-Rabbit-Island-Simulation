@@ -33,7 +33,7 @@ namespace Simulation
             var generation = Math.Max(mother.Generation, father.Generation) + 1;
             if (mother is Rabbit rabbitMother && father is Rabbit rabbitFather)
             {
-                var offspringNumber = StaticRandom.Generator.Next(rabbitMother.World.WorldConfig.RabbitConfig.MinChildren, rabbitMother.World.WorldConfig.RabbitConfig.MaxChildren);
+                var offspringNumber = StaticRandom.Generator.NextInt64(rabbitMother.World.WorldConfig.RabbitConfig.MinChildren, rabbitMother.World.WorldConfig.RabbitConfig.MaxChildren);
                 for (int i = 0; i < offspringNumber; i++)
                 {
                     Rabbit chosenParent;
@@ -51,7 +51,7 @@ namespace Simulation
             }
             else if (mother is Wolf wolfMother && father is Wolf wolfFather)
             {
-                var offspringNumber = StaticRandom.Generator.Next(wolfMother.World.WorldConfig.WolvesConfig.MinChildren, wolfMother.World.WorldConfig.WolvesConfig.MaxChildren);
+                var offspringNumber = StaticRandom.Generator.NextInt64(wolfMother.World.WorldConfig.WolvesConfig.MinChildren, wolfMother.World.WorldConfig.WolvesConfig.MaxChildren);
                 for (int i = 0; i < offspringNumber; i++)
                 {
                     Wolf chosenParent;
@@ -100,7 +100,7 @@ namespace Simulation
             if (mother is Rabbit rabbitMother && father is Rabbit rabbitFather)
             {
                 traits.Add("Fear", 0);
-                var offspringNumber = StaticRandom.Generator.Next(rabbitMother.World.WorldConfig.RabbitConfig.MinChildren, rabbitMother.World.WorldConfig.RabbitConfig.MaxChildren);
+                var offspringNumber = StaticRandom.Generator.NextInt64(rabbitMother.World.WorldConfig.RabbitConfig.MinChildren, rabbitMother.World.WorldConfig.RabbitConfig.MaxChildren);
                 for (int i = 0; i < offspringNumber; i++)
                 {
                     if (StaticRandom.Generator.Next(2) == 0)
@@ -146,7 +146,7 @@ namespace Simulation
             else if (mother is Wolf wolfMother && father is Wolf wolfFather)
             {
                 traits.Add("Attack", 0);
-                var offspringNumber = StaticRandom.Generator.Next(wolfMother.World.WorldConfig.WolvesConfig.MinChildren, wolfMother.World.WorldConfig.WolvesConfig.MaxChildren);
+                var offspringNumber = StaticRandom.Generator.NextInt64(wolfMother.World.WorldConfig.WolvesConfig.MinChildren, wolfMother.World.WorldConfig.WolvesConfig.MaxChildren);
                 for (int i = 0; i < offspringNumber; i++)
                 {
                     if (StaticRandom.Generator.Next(2) == 0)

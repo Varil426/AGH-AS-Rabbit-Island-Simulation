@@ -38,10 +38,10 @@ namespace Simulation
         {
             lock (this)
             {
-                int dayDuration = (int)((60 * 60 * 24 * 1000) / _world.WorldConfig.TimeRate);
-                int expirencyTime = dayDuration * 2;
-                int fruitsPerDay = _world.WorldConfig.FruitsPerDay;
-                bool foodExpires = _world.WorldConfig.FoodExpires;
+                var dayDuration = (int)((60 * 60 * 24 * 1000) / _world.WorldConfig.TimeRate);
+                var expirencyTime = dayDuration * 2;
+                var fruitsPerDay = _world.WorldConfig.FruitsPerDay;
+                var foodExpires = _world.WorldConfig.FoodExpires;
                 _shouldRun = true;
                 try
                 {
