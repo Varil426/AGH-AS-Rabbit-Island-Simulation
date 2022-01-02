@@ -116,6 +116,11 @@ namespace Simulation
 
         public double TimeRate { get; set; }
 
+        /// <summary>
+        /// Timeout time in seconds.
+        /// </summary>
+        public long Timeout { get; set; } = -1;
+
         public bool DeathFromOldAge { get; set; }
 
         public long MaxCreatures { get; set; }

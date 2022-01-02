@@ -266,6 +266,8 @@ namespace Visualization
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.MutationImpact.ToString()] = mutationImpact;
             simulationParams.Params[SimulationBuilder.SimulationParamsEnum.OffspringGenerationMethod.ToString()] = (long)OffspringGenerationMethodInput.SelectedIndex;
 
+            simulationParams.Params[SimulationBuilder.SimulationParamsEnum.Timeout.ToString()] = -1L;
+
             return simulationParams;
         }
 

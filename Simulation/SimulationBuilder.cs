@@ -65,6 +65,9 @@ public class SimulationBuilder : ISimulationBuilder
 
         [Type(typeof(long))]
         OffspringGenerationMethod,
+
+        [Type(typeof(long))]
+        Timeout,
     }
 
     public enum SimulationResultsEnum
@@ -172,6 +175,7 @@ public class SimulationBuilder : ISimulationBuilder
             },
             MutationChance = (double)simulationParams.Params[SimulationParamsEnum.MutationChance.ToString()],
             MutationImpact = (double)simulationParams.Params[SimulationParamsEnum.MutationImpact.ToString()],
+            Timeout = (long)simulationParams.Params[SimulationParamsEnum.Timeout.ToString()],
         };
 
         config.RabbitConfig.InitialPopulation = (long)simulationParams.Params[SimulationParamsEnum.RabbitsInitialPopulation.ToString()];

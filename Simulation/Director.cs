@@ -45,7 +45,7 @@ namespace Simulation
                 _shouldRun = true;
                 try
                 {
-                    while (_shouldRun && _world.GetAllEntities().OfType<ICreature>().Any(creature => creature.IsAlive))
+                    while (_shouldRun && _world.GetAllEntities().OfType<ICreature>().Any(creature => creature.IsAlive) && (_world.WorldConfig.Timeout <= 0 || (DateTime.Now - _world.StartTime).TotalSeconds < _world.WorldConfig.Timeout))
                     {
                         if (foodExpires)
                         {
