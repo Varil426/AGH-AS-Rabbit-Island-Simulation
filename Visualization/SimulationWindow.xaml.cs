@@ -38,7 +38,8 @@ namespace Visualization
             {
                 Width = _simulation.World.WorldMap.Size.Item1,
                 Height = _simulation.World.WorldMap.Size.Item2,
-                Background = Brushes.Green
+                Background = Brushes.Green,
+                ClipToBounds = true
             };
             Plane.Children.Add(canvas);
 
