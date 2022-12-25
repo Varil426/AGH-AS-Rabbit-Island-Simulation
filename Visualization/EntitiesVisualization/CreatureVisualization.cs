@@ -6,6 +6,8 @@ namespace Visualization.EntitiesVisualization
 {
     internal class CreatureVisualization<TCreature> : EntityVisualization<TCreature> where TCreature : Creature
     {
+        private const int CREATURE_REPRESENTATION_SIZE = 4;
+        
         public CreatureVisualization(TCreature creature) : base(creature)
         {
         }
@@ -15,11 +17,15 @@ namespace Visualization.EntitiesVisualization
             var localCanvas = new Canvas();
             var rectangle = new Rectangle()
             {
-                Width = 1,
-                Height = 1,
+                Width = CREATURE_REPRESENTATION_SIZE,
+                Height = CREATURE_REPRESENTATION_SIZE,
                 Fill = Color
             };
             localCanvas.Children.Add(rectangle);
+            // ReSharper disable once PossibleLossOfFraction
+            Canvas.SetLeft(rectangle, -CREATURE_REPRESENTATION_SIZE / 2);
+            // ReSharper disable once PossibleLossOfFraction
+            Canvas.SetTop(rectangle, -CREATURE_REPRESENTATION_SIZE / 2);
             if (VisualizationConfig.Instance.DrawRanges && VisualizedEntity.IsAlive)
             {
                 var sightRange = new Ellipse()
